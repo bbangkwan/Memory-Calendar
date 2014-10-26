@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+		android:background="@drawable/mc_bg"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/search_list"
+            android:layout_marginTop="13dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="관심사 설정" />
+        
+    </LinearLayout>
+
+    <ExpandableListView
+        android:id="@+id/crawlinglist"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="#00000000"
+        android:groupIndicator="@null" />
+
+</LinearLayout>

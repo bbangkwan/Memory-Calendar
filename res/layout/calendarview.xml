@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/mc_bg2"
+    android:paddingTop="5dp"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/selectmonth"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:layout_marginLeft="15dp"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@+id/btn_today"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00ff0000"
+            android:padding="5dp"
+            android:src="@drawable/today_btn" />
+
+        <ImageButton
+            android:id="@+id/btn_calendar_prevmonth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="#00ff0000"
+            android:padding="5dp"
+            android:src="@drawable/prev_btn" />
+        	
+        	<LinearLayout
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:paddingLeft="20dp"
+            	android:paddingRight="20dp"
+            	android:gravity="center"
+            	android:orientation="vertical" >
+
+	            <TextView
+	                android:id="@+id/CalendarYearTxt"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:textColor="#238cdc"
+	                android:textSize="14dp"
+	                android:textStyle="bold" />
+	
+	            <TextView
+	                android:id="@+id/CalendarMonthTxt"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:textColor="#0b60c8"
+	                android:textSize="30dp"
+	                android:textStyle="bold" />
+	        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btn_calendar_nextmonth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00ff0000"
+            android:layout_marginRight="15dp"
+            android:padding="5dp"
+           android:src="@drawable/next_btn"/>
+<!--  
+        <ImageButton
+            android:id="@+id/AddSchedule"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:textStyle="bold"
+            android:background="#00ff0000"
+            android:src="@drawable/cal_add_btn"/>
+-->
+		
+		<ImageButton
+			android:id="@+id/btn_effect"  
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content" 
+			android:layout_marginRight="20dp"
+			android:background="#00ff0000"
+			android:src="@drawable/led_btn"
+			/>
+ 
+        
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/calendar_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TableLayout
+            android:id="@+id/tl_calendar_monthly"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+        </TableLayout>
+    </ScrollView>
+    
+<!--  내장 캘린더 일정불러오기
+    <ListView
+        android:id="@+id/scheduleListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:cacheColorHint="#00000000"
+        android:paddingTop="8dp"
+        android:divider="#666666"
+        android:dividerHeight="1dp" />
+-->
+</LinearLayout>

@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="15dp" >
+
+        <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="20dp"
+	        android:layout_marginLeft="30dp"
+	        android:paddingBottom="8dp"
+	        android:orientation="horizontal" >
+	        <ImageView 
+	            android:layout_width="28dp"
+	            android:layout_height="28dp"
+	            android:src="@drawable/fb_icon" />
+	        
+	        <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginLeft="10dp"
+	            android:textStyle="bold"
+	            android:paddingTop="5dp"
+	            android:text="페이스북 주기 설정"
+	            android:textColor="#555555" />
+	        
+	        
+		</LinearLayout>
+        
+        
+        <ImageView 
+	        android:layout_width="match_parent"
+	        android:layout_height="8dp"
+	        android:src="@drawable/set_line" />
+       
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/item_bg"
+            android:orientation="vertical"
+            android:layout_marginTop="3dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp" >
+
+            <RadioGroup
+                android:id="@+id/dategroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <RadioButton
+                    android:id="@+id/weekend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="10dp"
+                    android:paddingStart="10dp"
+                    android:text="1주일"
+                    android:textColor="#666666" />
+
+                <RadioButton
+                    android:id="@+id/month"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="10dp"
+                    android:paddingStart="10dp"
+                    android:text="1달"
+                    android:textColor="#666666" />
+
+                <RadioButton
+                    android:id="@+id/year"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="10dp"
+                    android:paddingStart="10dp"
+                    android:text="1년"
+                    android:textColor="#666666" />
+            </RadioGroup>
+            <!--
+        <TextView
+            android:id="@+id/checkedid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/checkedindex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+            -->
+
+            <Button
+                android:id="@+id/setbtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="설정 변경하기" />
+        </LinearLayout>
+    </LinearLayout>
+    <!--
+    <EditText
+        android:id="@+id/Title"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        
+    />
+    <EditText
+        android:id="@+id/txtItem"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        
+    />
+ 
+    <Button
+        android:id="@+id/btnAdd"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/txtItem"
+        android:text="add"
+    />
+    -->
+
+	<LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="5dp"
+	        android:layout_marginLeft="30dp"
+	        android:paddingBottom="8dp"
+	        android:orientation="horizontal" >
+	        <ImageView 
+	            android:layout_width="28dp"
+	            android:layout_height="28dp"
+	            android:src="@drawable/led_icon" />
+		    <TextView
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:textStyle="bold"
+		        android:paddingTop="5dp"
+		        android:text="이벤트 분류 설정"
+		        android:layout_marginLeft="10dp"
+		        android:textColor="#555555" />
+	</LinearLayout>
+	
+	<ImageView 
+	    android:layout_width="match_parent"
+	    android:layout_height="8dp"
+	    android:src="@drawable/set_line" />
+	
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:background="@drawable/item_bg"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="15dp"
+        android:orientation="vertical">
+
+        <ListView
+            android:id="@+id/item_click_example_activity_lv_list"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+
+</LinearLayout>

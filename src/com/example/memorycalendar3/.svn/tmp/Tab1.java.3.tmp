@@ -1,0 +1,531 @@
+package com.example.memorycalendar3;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Random;
+
+import org.java_websocket.client.WebSocketClient;
+import org.java_websocket.handshake.ServerHandshake;
+import org.json.JSONException;
+
+import Boom.It.Network.Websocket;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.util.Log;
+import android.util.SparseBooleanArray;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.EditText;
+import android.widget.ExpandableListView;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.fb_feedlist.R;
+
+import ctartifact.android.common.CTCalendarView;
+
+public class Tab1 extends Activity {
+   public static final String TAG = "Tab1";
+   private ArrayList<String> mGroupList = null;
+   private ArrayList<ArrayList<String>> mChildList = null;
+   private ArrayList<String> mChildListContent = null;
+
+   ArrayList<String> img_urllist = null;
+   ArrayList<ArrayList<String>> img_urlgroup = null;
+   LinkedList<Integer> list = new LinkedList<Integer>();
+   ArrayList<Integer> random_int = null;
+   /*
+    * Layout
+    */
+   private ExpandableListView mListView;
+
+   Button send_btn;
+   EditText edit_search;
+
+   
+   //sharedpreferenced
+   SharedPreferences sharedPref;
+   SharedPreferences.Editor edior;
+   
+   private WebSocketClient mWebSocketClient;
+   
+   int key_index=0;
+
+   int add_check;
+   String word;
+
+
+   @Override
+   protected void onCreate(Bundle savedInstanceState) {
+      super.onCreate(savedInstanceState);
+      setContentView(R.layout.tab2);
+      
+      ///
+      sharedPref = getSharedPreferences("Favorite", MODE_PRIVATE);
+      edior = sharedPref.edit();
+      ///
+
+      send_btn = (Button) findViewById(R.id.search_list);
+      send_btn.setOnClickListener(new OnClickListener() {
+
+         @Override
+         public void onClick(View v) {
+            
+            
+            searchSend();
+         }
+      });
+      
+      for (int i = 0; i < 10; ++i)
+         list.addLast(i); // 1~100까지의 값을 집어 넣음
+
+      img_urllist = new ArrayList<String>();
+      img_urlgroup = new ArrayList<ArrayList<String>>();
+
+      img_urllist.add("http://imageshack.us/a/img845/7583/ck48.jpg");
+      img_urllist
+            .add("http://cfile7.uf.tistory.com/image/273C2C3E518F1AC1190014");
+      img_urllist
+            .add("http://cfile1.uf.tistory.com/image/020DAC345180E3ED102778");
+      img_urllist
+            .add("http://imgnews.naver.net/image/111/2013/03/24/1363497896253_1_141215_59_20130324142109.jpg");
+      img_urllist
+            .add("http://www.koreatimes.net/files/attach/images/59220/607/159/201212115699957_r.jpg");
+      img_urllist
+            .add("http://cfile27.uf.tistory.com/image/0170093351A589620731E3");
+      img_urllist
+            .add("http://cfile4.uf.tistory.com/image/1918654951657C6A2F45A1");
+      img_urllist
+            .add("http://cfile5.uf.tistory.com/image/2125C63D519D1A6E557F1F");
+      img_urllist
+            .add("http://cfile10.uf.tistory.com/image/260E0F4253C3785517B02B");
+      img_urllist
+            .add("http://i1.daumcdn.net/thumb/R750x0/%3Ffname%3Dhttp%253A%252F%252Fcfile4.uf.tistory.com%252Fimage%252F25625D4753D5D19121A2B3");
+      img_urllist
+            .add("http://i1.daumcdn.net/thumb/R750x0/%3Ffname%3Dhttp%253A%252F%252Fcfile4.uf.tistory.com%252Fimage%252F25625D4753D5D19121A2B3");
+      img_urllist
+            .add("http://cfile24.uf.tistory.com/image/030E0A3851B2C4FF39E554");
+      img_urllist
+            .add("http://image.ytn.co.kr/general/jpg/2014/0331/201403311238555935_h.jpg");
+      img_urllist
+            .add("http://cfile10.uf.tistory.com/image/1914A94051551420233EF4");
+      img_urllist
+            .add("http://img.sbs.co.kr/newsnet/espn/upload/2012/12/17/30000201945.jpg");
+      img_urllist
+            .add("http://cfile7.uf.tistory.com/image/234FC93B525CB8D319570A");
+      img_urllist
+            .add("http://cfile22.uf.tistory.com/image/22575C43520B19563207D8");
+      img_urllist
+            .add("http://upload.wikimedia.org/wikipedia/commons/7/7c/Hyun-Jin_Ryu_2013.jpg");
+      img_urllist
+            .add("http://cfile22.uf.tistory.com/image/2215EF3B535072FD2EBC6F");
+      img_urllist
+            .add("http://image.ytn.co.kr/general/jpg/2013/1015/201310151035199043_h.jpg");
+      img_urlgroup.add(0, img_urllist);
+
+      img_urllist = new ArrayList<String>();
+      img_urllist
+            .add("http://upload.wikimedia.org/wikipedia/commons/f/f6/LA_Dodgers.svg");
+      img_urllist
+            .add("http://kosmixmedia.com/static/392e58a2c113b65c0723dd880e529242.jpg");
+      img_urllist
+            .add("http://losangeles.dodgers.mlb.com/mlb/images/team_logos/social_media/og_1200x630_image/la_1200x630.jpg");
+      img_urllist
+            .add("http://2.bp.blogspot.com/-weEXQs7fJP4/UZ5XvQKQH6I/AAAAAAAAADA/92StvSyaXMY/s1600/Dodger.jpg");
+      img_urllist
+            .add("http://wallpho.com/wp-content/uploads/8589130441872-la-dodgers-wallpaper-hd.jpg");
+      img_urllist
+            .add("http://ep.yimg.com/ay/cuesight/pool-table-felt-la-dodgers-8-foot-table-7.gif");
+      img_urllist
+            .add("http://gostickit.biz/wp-content/blogs.dir/1/files/products_img/la_dodgers_logo_sticker.png");
+      img_urllist.add("http://i39.tinypic.com/2dr5hzm.jpg");
+      img_urllist.add("http://i.myniceprofile.com/85/8575.jpg");
+      img_urllist
+            .add("http://i419.photobucket.com/albums/pp279/careisallless/LA-1.jpg");
+      img_urllist.add("http://i.myniceprofile.com/307/30705.jpg");
+      img_urllist
+            .add("http://files.coveroo.com/variant/large/otter-iphone4-com/black/la-dodgers-bats_color_fb_3.jpg");
+      img_urllist
+            .add("http://www.cqrbps.com/wp-content/uploads/2014/09/La-Dodgers-2013-Viewing-Gallery.png");
+      img_urllist
+            .add("http://files.coveroo.com/variant/large/speck-iphone-5-candyshell/black/la-dodgers-blue-stars-stripes_color_fb_3.jpg");
+      img_urllist
+            .add("http://pmcdeadline2.files.wordpress.com/2012/11/dodgers__121125023637.jpg");
+      img_urllist
+            .add("https://tw-projects.s3.amazonaws.com/twduckbrand/prod/images/product_items/LA_dodgers_600x600_resized.jpg");
+      img_urllist
+            .add("http://www.artmoth.com/images/content/backgrounds/13-1280955920-bg-la-dodgers.jpg");
+      img_urllist
+            .add("http://cdn9.staztic.com/app/a/475/475954/la-dodgers-wallpapers-157244-1-s-307x512.jpg");
+      img_urllist
+            .add("http://losthatsportsblog.com/wp-content/uploads/2011/02/Los_Angeles_Dodgers1.jpg");
+      img_urllist
+            .add("http://24.media.tumblr.com/18c6053ba56802af33eec8157db41b7a/tumblr_mq8b4qDzeW1rwtwmpo1_1280.gif");
+      img_urlgroup.add(1, img_urllist);
+
+      img_urllist = new ArrayList<String>();
+      img_urllist
+            .add("http://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Sangmyung_University.jpg/270px-Sangmyung_University.jpg");
+      img_urllist
+            .add("http://postfiles1.naver.net/20110929_128/hyunstudy_1_1317276082634n6B1I_PNG/%25BB%25F3%25B8%25ED%25B4%25EB3.png%3Ftype%3Dw2");
+      img_urllist
+            .add("http://cfs14.tistory.com/image/12/tistory/2009/06/03/22/06/4a267548c8dab");
+      img_urllist
+            .add("http://lafent.com/news/webadmin/news/uploads/1269414574%25EC%2583%2581%25EB%25AA%2585%25EB%258C%2580%25ED%2595%2599%25EA%25B5%2590%2520%25EC%25BA%25A0%25ED%258D%25BC%25EC%258A%25A4%2520%25EB%2591%2598%25EB%259F%25AC%25EB%25B3%25B4%25EA%25B8%25B0.jpg");
+      img_urllist
+            .add("http://energy.korea.com/ko/files/2013/02/%25EC%2583%2581%25EB%25AA%2585%25EB%258C%2580.jpg");
+      img_urllist
+            .add("http://cfile236.uf.daum.net/image/163D7C4B4ED1A2AD04BCCB");
+      img_urllist
+            .add("https://www.doopedia.co.kr/_upload/comm/travelkorea/200804/27/400_120929800051960.jpg");
+      img_urllist.add("http://www.lafent.com/news/data/news/img1/108048.jpg");
+      img_urllist
+            .add("http://image.cine21.com/resize/cine21/article/2011/1122/K0000031_OKO_5303%5BW578-%5D.jpg");
+      img_urllist
+            .add("http://www.jumphackers.com/v2/upload/M_1_15/editor/edit_201204171627371.jpg");
+      img_urllist
+            .add("http://doopedia.co.kr/_upload/comm/travelkorea/200804/27/400_120929827743992.jpg");
+      img_urllist
+            .add("http://www.smu.ac.kr/upload/board/14445/t_2029148.jpg");
+      img_urllist
+            .add("http://cfile209.uf.daum.net/image/165B5F4F4E9FEA17452710");
+      img_urllist
+            .add("http://cfs14.tistory.com/image/36/tistory/2009/06/03/22/06/4a2675652b6ad");
+      img_urllist
+            .add("http://schoolpress.co.kr/wp-content/uploads/2013/02/%25EC%2583%2581%25EB%25AA%2585%25EB%258C%2580%25ED%2595%2599%25EA%25B5%2590_%25EC%25BA%25A0%25ED%258D%25BC%25EC%258A%25A4.png");
+      img_urllist
+            .add("http://cfile219.uf.daum.net/image/1429A434502D1B75174CE3");
+      img_urllist
+            .add("http://mw2.google.com/mw-panoramio/photos/medium/27440093.jpg");
+      img_urllist
+            .add("http://doopedia.co.kr/_upload/comm/travelkorea/200804/27/w_1024_120929827742441.jpg");
+      img_urllist
+            .add("https://lh4.ggpht.com/I-u0kheebjNNgiodU1p1Zeap8J3SRgv_wAtRq4Az99xxg9PkM2EGtmWLQ669hCPlRrQ%3Dh900");
+      img_urllist
+            .add("http://sccdn.chosun.com/news/html/2010/12/02/2010120201000204700010112.jpg");
+      img_urlgroup.add(2, img_urllist);
+
+      mListView = (ExpandableListView) findViewById(R.id.crawlinglist);
+
+      mGroupList = new ArrayList<String>();
+      mChildList = new ArrayList<ArrayList<String>>();
+
+      // sharedprefernce에 저장되어 있는 arraylist의 string 값을 대입을 하자.
+      mGroupList.add("류현진");
+      mGroupList.add("La dodgers");
+      mGroupList.add("상명대학교");
+      Log.d(TAG, "불러온 사진 개수 : " + img_urlgroup.size());
+
+      Random random = new Random();
+      int random_number;
+      random_int = new ArrayList<Integer>();
+      for (int i = list.size(); i > 5; i--) {
+
+         int index = random.nextInt(i); // 현재 list 길이 만큼의 숫자에서 랜덤 숫자 뽑아냄
+
+         random_int.add((Integer) list.get(index));
+
+         random_number = (Integer) list.get(index); // 랜덤 값이 나온 값을 리스트에서 뽑아냄
+                                          // (결국 랜덤으로 나온 값을 뽑아내는것과
+                                          // 같음
+
+         list.remove(index); // 뽑아낸 리스트 제거
+
+      }
+      Log.d(TAG, "random list: " + random_int);
+
+      for (int i = 0; i < img_urlgroup.size(); i++) {
+         mChildListContent = new ArrayList<String>();
+         for (int z = 0; z < 5; z++) {
+            int in = random_int.get(z);
+            mChildListContent.add(img_urlgroup.get(i).get(in));
+         }
+         mChildList.add(mChildListContent);
+      }
+
+      mListView.setAdapter(new BaseExpandableAdapter(this, mGroupList,
+            mChildList, mListView));
+   }
+
+   protected void searchSend() {
+		// TODO Auto-generated method stub
+		DialogInterface mPopupDlg = null;
+		Context searchContext = getApplicationContext();
+		final ArrayAdapter<String> Adapter;
+
+		final AlertDialog.Builder search_dialog = new AlertDialog.Builder(
+				Tab1.this, ProgressDialog.THEME_HOLO_DARK);
+
+		// sharedpref에 저장된 관심사 키워드를 불러온다.
+		final ArrayList<String> search_word = new ArrayList<String>();
+		sharedPref.getAll();
+		Map<String, ?> MapObject;
+		MapObject = sharedPref.getAll(); // map에 sharedpreference에 있는 key-value를
+											// 넣는다.(sharedpreferenced에 있는 event
+											// 설정 정보를 저장한다.)
+		for (Map.Entry<String, ?> entry : MapObject.entrySet()) {
+			search_word.add(entry.getKey());  //관심사 설정하는 dialog에 있는 리스트에 보여주기 위해 searchSend array에 key값만 저장한다.
+		}
+<<<<<<< .mine
+		Log.d(TAG, "searchSend() : " + search_word);
+=======
+	
+		// /
+>>>>>>> .r117
+
+		LayoutInflater factory = (LayoutInflater) searchContext
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		final View searchview = factory.inflate(R.layout.search_dialog, null);
+
+		final EditText input_word = (EditText) searchview
+				.findViewById(R.id.search_word);
+		final ListView search_word_list = (ListView) searchview
+				.findViewById(R.id.search_list);
+
+		/*
+		 * final SearchListAdapter sl = new SearchListAdapter(Tab1.this, 0,
+		 * search_word);
+		 */
+		Adapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_list_item_single_choice, search_word);
+
+		search_word_list.setAdapter(Adapter);
+		search_word_list.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+		/*
+		 * search_word_list.setSelected(true);
+		 * search_word_list.setClickable(true);
+		 */
+
+		search_dialog.setView(searchview);
+		search_dialog.setTitle("관심사 설정");
+		// search word 추가.
+		search_dialog.setPositiveButton("추가",
+				new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+					}
+				});
+		// dialog 닫기.
+		search_dialog.setNegativeButton("확인",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						connectWebSocket();//
+						System.out.println("관심사 정보 가져오기");
+					}
+				});
+		// 선택한 검색어 삭제.
+		search_dialog.setNeutralButton("삭제",
+				new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+					}
+				});
+
+		final AlertDialog dialog = search_dialog.create();
+		dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+		dialog.show();
+
+		dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(
+				new View.OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+
+						if (input_word.getText().toString().length() == 0) {
+							// 공백일 때 처리할 내용
+							Toast.makeText(getApplicationContext(),
+									"공백입니다. 다시 입력하세요.", 1000).show();
+						} else {
+							// 공백이 아닐 때 처리할 내용
+							add_check = 0;
+
+							word = input_word.getText().toString();
+							search_word.add(word);
+							input_word.setText("");
+							Adapter.notifyDataSetChanged();
+
+							save_search_word(word, add_check);
+						}
+					}
+				});
+		// 삭제 클릭 후 dialog 안 닫히게.
+		dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener(
+				new View.OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						ArrayList<String> delete_list = new ArrayList<String>();
+						add_check = 1;
+						
+						SparseBooleanArray sparse = search_word_list
+								.getCheckedItemPositions();
+						if (sparse.size() != 0) {
+<<<<<<< .mine
+							for (int i = search_word_list.getCount() - 1 ; i >= 0 ; i--) {
+=======
+							Log.d(TAG, "" + sparse.size());
+							
+							for (int i = search_word_list.getCount() - 1; i >= 0; i--) {
+>>>>>>> .r117
+								if (sparse.get(i)) {
+<<<<<<< .mine
+									delete_list.add(search_word.get(i));		
+									Log.d(TAG, "delete_list : " + delete_list);
+=======
+							
+									edior.remove(search_word.get(i));
+									edior.commit();
+									
+>>>>>>> .r117
+									search_word.remove(i);
+									
+								}
+							}
+							Toast.makeText(getApplicationContext(),
+									"삭제되었습니다." + delete_list, 1000).show();
+							
+							search_word_list.clearChoices();
+							
+							Adapter.notifyDataSetChanged();
+							
+							delete_search_word(delete_list, add_check);
+						}
+<<<<<<< .mine
+						
+						else
+							Toast.makeText(getApplicationContext(), "삭제안됨", 1000)
+								.show();						
+=======
+						
+						// save_search_word(word, add_check);
+						// send_search_word(word, add_check);
+
+>>>>>>> .r117
+					}
+				});
+	}
+
+	/**
+	 * WebSocket
+	 */
+	private void connectWebSocket() {
+		URI uri;
+		SharedPreferences Pref = getSharedPreferences("MY_SHARED_PREF",
+				MODE_PRIVATE);
+		final String uemail = Pref.getString("user_email", null);
+
+		final ArrayList<String> favorite_key = new ArrayList<String>();
+		;
+
+		try {
+			uri = new URI("ws://175.126.125.198:8081/App");
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+			return;
+		}
+
+		mWebSocketClient = new WebSocketClient(uri, uemail) {
+			@Override
+			public void onOpen(ServerHandshake serverHandshake) {
+				Log.i("Websocket", "Opened");
+
+				String keyword = "url#";
+
+				Map<String, ?> MapObject; // sharedpreferenced에 있는 내용을 저장한다.
+				MapObject = sharedPref.getAll(); // map에 sharedpreference에 있는
+													// key-value를
+													// 넣는다.(sharedpreferenced에
+													// 있는 event 설정 정보를 저장한다.)
+				for (Map.Entry<String, ?> entry : MapObject.entrySet()) {
+					keyword += entry.getKey() + ",";
+					favorite_key.add(entry.getKey());
+				}
+				favorite_key.add("");// 서버에서 마지막에 공백 url을 보내서 리스트의 갯수를 맞춰주기 위해
+										// arraylist에 공백을 추가해 준다.
+<<<<<<< .mine
+									//이게문제인듯한데...
+				Log.d(TAG, "onOpen : " + favorite_key);
+				mWebSocketClient.send(keyword);
+=======
+				
+				System.out.println("favorite_key : "+favorite_key);
+				
+//				mWebSocketClient.send(keyword);
+>>>>>>> .r117
+			}
+
+			@Override
+			public void onMessage(String s) {
+				final String message = s;
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						System.out.println(favorite_key.get(key_index) + " : "
+								+ message);
+						Log.d(TAG, "onMessage");
+						edior.putString(favorite_key.get(key_index++), message);
+						edior.commit();
+					}
+				});
+			}
+
+			@Override
+			public void onClose(int i, String s, boolean b) {
+				Log.i("Websocket", "Closed " + s);
+			}
+
+			@Override
+			public void onError(Exception e) {
+				Log.i("Websocket", "Error " + e.getMessage());
+			}
+		};
+
+		mWebSocketClient.connect();
+	}
+
+	// 서버에 관심사 검색어 전송하는 함수. add_check가 0이면 서버에 저장. 1이면 서버에서 삭제.
+	protected void save_search_word(String keyword, int add_check) {
+		// TODO Auto-generated method stub
+		
+		if(add_check == 0){
+			Log.d(TAG, "save_search_word : " + keyword);
+			// 입력한 키워드를 sharedpref에 저장한다.
+			edior.putString(keyword, " ");
+			edior.commit();
+		}
+	}
+	
+	protected void delete_search_word(ArrayList<String> delete_list, int add_check2){
+		int count = delete_list.size();
+		//delete하고 확인 버튼을 누르면 공백이 하나가 shared에 저장된다. 근데 이거때문에 다시 다이얼로그에 들어가서 그 공백만 삭제를 하면 어플이 죽는다.
+		for(int d = 0 ; d < count ; d++){
+			edior.remove(delete_list.get(d));
+			edior.commit();
+			Log.d(TAG, "delete_search_word : " + delete_list.get(d));
+		}
+	}
+}

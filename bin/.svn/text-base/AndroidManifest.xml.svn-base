@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.fb_feedlist"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="18" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.example.memorycalendar3.Tab"
+            android:label="@string/app_name"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@android:style/Theme.NoTitleBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.example.memorycalendar3.SplashActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        
+        <activity
+            android:name=".MainActivity" android:label="MainActivity" />
+        
+        <activity
+            android:name=".BasicInfo" android:label="BasicInfo" />
+        <activity
+            android:name=".FeedItem" android:label="FeedItem" />
+        <activity
+            android:name=".FeedItemView" android:label="FeedItemView" />
+        <activity
+            android:name=".FeedListAdapter" android:label="FeedListAdapter" />
+        <activity
+            android:name=".FeedListView" android:label="FeedListView" />
+        <activity
+            android:name=".OnDataSelectionListener" android:label="OnDataSelectionListener" />
+        <activity
+            android:name="com.example.memorycalendar3.Setting_Event" android:label="Setting_Event" />
+        <activity
+            android:name="com.example.memorycalendar3.Setting_DateChange" android:label="Setting_DateCahnge" />
+      
+        <activity
+            android:name="com.example.memorycalendar3.Tab1"
+            android:label="Tab1" />
+        
+        <activity
+            android:name="com.example.memorycalendar3.BaseExpandableAdapter"
+            android:label="BaseExpandableAdapter" />
+        
+        <activity
+            android:name="com.example.memorycalendar3.Setting"
+            android:label="Tab2" />
+            
+        <activity
+            android:name="ctartifact.android.common.CTCalendarView"
+            android:label="CTCalendarView" />
+        <activity
+            android:name="ctartifact.android.common.Oneday"
+            android:label="Oneday" />
+        <activity
+            android:name="hansune.android.exam.ctcalendar.CalendarView"
+            android:label="CalendarView" />
+    </application>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+</manifest>

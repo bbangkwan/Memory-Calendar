@@ -1,0 +1,9 @@
+<resources>
+
+    <string-array name="foods">
+        <item>Rainbow Mode</item>
+        <item>♥︎</item>
+        <item>Smile</item>
+    </string-array>
+
+</resources>

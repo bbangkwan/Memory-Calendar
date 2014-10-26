@@ -1,0 +1,26 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="15dp"
+    android:orientation="vertical" >
+    
+    <EditText
+        android:id="@+id/title"
+        android:hint="입 력"
+        android:layout_width="match_parent"
+        android:layout_height="61dp" />
+
+	<com.chiralcode.colorpicker.ColorPicker
+        android:id="@+id/colorPicker"
+        android:layout_width="288dp"
+        android:layout_height="288dp"
+        android:layout_gravity="center" />
+
+    <Button
+        android:id="@+id/OK"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="추가하기" />
+   
+
+</LinearLayout>
